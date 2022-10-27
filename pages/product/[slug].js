@@ -7,17 +7,17 @@ import React, { useContext } from "react";
 import { Store } from "../../utils/Store";
 
 export default function ProductScreen() {
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { query } = useRouter();
   const { slug } = query;
   const product = data.products.find((x) => x.slug === slug);
 
   if (!product) {
-    return <div>Product Not Found</div>;
+    return <Layout title="Produt Not Found">Produt Not Found</Layout>;
   }
-  const router = useRouter()
-  
-  const addToCartHandler = () => {
+
+  const addToCartHandler = async () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
@@ -26,8 +26,7 @@ export default function ProductScreen() {
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
-    router.push('/cart')
-
+    router.push("/cart");
   };
 
   return (
@@ -66,6 +65,7 @@ export default function ProductScreen() {
               <div>${product.price}</div>
             </div>
             <div className="mb-2 flex justify-between">
+              <div>Status</div>
               <div>{product.countInStock > 0 ? "In stock" : "Unavailable"}</div>
             </div>
             <button
@@ -78,5 +78,5 @@ export default function ProductScreen() {
         </div>
       </div>
     </Layout>
-  )
+  );
 }
