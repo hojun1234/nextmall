@@ -15,6 +15,8 @@ export default function ProductScreen() {
   if (!product) {
     return <div>Product Not Found</div>;
   }
+  const router = useRouter()
+  
   const addToCartHandler = () => {
     const existItem = state.cart.cartItems.find((x) => x.slug === product.slug);
     const quantity = existItem ? existItem.quantity + 1 : 1;
@@ -24,6 +26,8 @@ export default function ProductScreen() {
       return;
     }
     dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push('/cart')
+
   };
 
   return (
