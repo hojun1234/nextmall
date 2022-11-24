@@ -23,6 +23,7 @@ export default function LoginScreen() {
     register,
     formState: { errors },
   } = useForm();
+
   const submitHandler = async ({ email, password }) => {
     try {
       const result = await signIn("credentials", {
@@ -34,6 +35,50 @@ export default function LoginScreen() {
         toast.error(result.error);
       }
     } catch (error) {
+      toast.error(getError(err));
+    }
+  };
+
+  const githubLoginHandler = async () => {
+    try {
+      const result = await signIn("github", {
+        redirect: false,
+      });
+      console.log("Github login: " + result);
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
+
+  const googleLoginHandler = async () => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const result = await signIn("google", {
+        redirect: false,
+      });
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
+
+  const kakaoLoginHandler = async () => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const result = await signIn("kakao", {
+        redirect: false,
+      });
+    } catch (err) {
+      toast.error(getError(err));
+    }
+  };
+
+  const naverLoginHandler = async () => {
+    try {
+      // eslint-disable-next-line no-unused-vars
+      const result = await signIn("naver", {
+        redirect: false,
+      });
+    } catch (err) {
       toast.error(getError(err));
     }
   };
@@ -96,6 +141,47 @@ export default function LoginScreen() {
           <Link href="register">
             <a>Register</a>
           </Link>
+        </div>
+
+        <div className="p-5 bg-gray-500 rounded-lg">
+          <div className="mb-4">
+            <button
+              className="primary-button w-full"
+              type="button"
+              onClick={githubLoginHandler}
+            >
+              Github Login
+            </button>
+          </div>
+          <div className="mb-4">
+            <button
+              className="primary-button w-full"
+              type="button"
+              onClick={googleLoginHandler}
+            >
+              Google Login
+            </button>
+          </div>
+
+          <div className="mb-4">
+            <button
+              className="primary-button w-full"
+              type="button"
+              onClick={kakaoLoginHandler}
+            >
+              Kakao Login
+            </button>
+          </div>
+
+          <div className="">
+            <button
+              className="primary-button w-full"
+              type="button"
+              onClick={naverLoginHandler}
+            >
+              Naver Login
+            </button>
+          </div>
         </div>
       </form>
     </Layout>
